@@ -18,15 +18,7 @@ class BlogViewSet2(APIView):
 
             serializer = BlogSerializer(blogs, many=True)
             return Response(serializer.data)
-        return Response({'status':'child_id does not exist'})
-
-class ParentViewSet(viewsets.ModelViewSet):
-    queryset = Parent.objects.all()
-    serializer_class = ParentSerializer
-
-class ChildViewSet(viewsets.ModelViewSet):
-    queryset = Child.objects.all()
-    serializer_class = ChildSerializer
+        return Response({'status':'child_id is reqired'} )
 
 class BlogViewSet(viewsets.ModelViewSet):
     queryset = Blog.objects.all()
@@ -38,11 +30,20 @@ class BlogViewSet(viewsets.ModelViewSet):
         parent = Parent.objects.get(id=parent_id)
         child = parent.children.first()  
 
-        blogs = Blog.objects.filter(content_age__lt=child.age)
+        blogs = Blog.objects.filter(content_age__lt=child.age , contend_gender = child.gender)
         if child.gender:
             blogs = blogs.filter(content_gender=child.gender)
         serializer = BlogSerializer(blogs, many=True)
         return Response(serializer.data)
+
+class ParentViewSet(viewsets.ModelViewSet):
+    queryset = Parent.objects.all()
+    serializer_class = ParentSerializer
+
+class ChildViewSet(viewsets.ModelViewSet):
+    queryset = Child.objects.all()
+    serializer_class = ChildSerializer
+
 
 
 

@@ -5,7 +5,8 @@ from .views import ParentViewSet, ChildViewSet, BlogViewSet , BlogViewSet2
 router = DefaultRouter()
 router.register(r'parents', ParentViewSet)
 router.register(r'children', ChildViewSet)
-router.register(r'blogs', BlogViewSet)
+router.register(r'blogs', BlogViewSet) 
+# use this url /blogs/personalized_feed?parent_id=<id>
 
 urlpatterns = [
     path('', include(router.urls)),
