@@ -2,10 +2,24 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import *
 from rest_framework.decorators import action
-from rest_framework.response import Response
+from rest_framework.response import Response 
 from rest_framework.views import APIView
 
 # Create your views here.
+
+class BlogViewSet2(APIView):
+    
+    def get(self, request  , child_id):
+        if child_id :
+            child = Child.objects.get(id= child_id)
+            blogs = Blog.objects.filter(content_age__lte = child.age , content_gender = child.gender)
+            if not blogs:
+                Response({'data':'blogs does not exists for your age/gender'} , status=status)
+
+            serializer = BlogSerializer(blogs, many=True)
+            return Response(serializer.data)
+        return Response({'status':'child_id does not exist'})
+        
 class ParentViewSet(viewsets.ModelViewSet):
     queryset = Parent.objects.all()
     serializer_class = ParentSerializer
@@ -32,17 +46,5 @@ class BlogViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-# we can use APIview also
-class BlogViewSet2(APIView):
-    
-    def get(self, request  , child_id):
-        if child_id :
-            child = Child.objects.get(id= child_id)
-            blogs = Blog.objects.filter(content_age__lte = child.age , content_gender = child.gender)
-            if not blogs:
-                Response({'data':'blogs does not exists for your age/gender'})
 
-            serializer = BlogSerializer(blogs, many=True)
-            return Response(serializer.data)
-        return Response({'status':'child_id does not exist'})
         
