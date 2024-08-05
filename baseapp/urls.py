@@ -9,5 +9,5 @@ router.register(r'blogs', BlogViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('blogs-feed//<int:child_id>/' , BlogViewSet2.as_view() , name='blog-2' )
+    path('blogs-feed/<int:child_id>/' , BlogViewSet2.as_view() , name='blog-2' )
 ]
