@@ -19,7 +19,7 @@ class BlogViewSet2(APIView):
             serializer = BlogSerializer(blogs, many=True)
             return Response(serializer.data)
         return Response({'status':'child_id does not exist'})
-        
+
 class ParentViewSet(viewsets.ModelViewSet):
     queryset = Parent.objects.all()
     serializer_class = ParentSerializer
@@ -34,7 +34,6 @@ class BlogViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def personalized_feed(self, request, pk=None):
-        print('workekk')
         parent_id = request.query_params.get('parent_id')
         parent = Parent.objects.get(id=parent_id)
         child = parent.children.first()  
