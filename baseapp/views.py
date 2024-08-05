@@ -44,5 +44,5 @@ class BlogViewSet2(APIView):
 
             serializer = BlogSerializer(blogs, many=True)
             return Response(serializer.data)
-        return Response('status':'child_id does not exist')
+        return Response({'status':'child_id does not exist'})
         
