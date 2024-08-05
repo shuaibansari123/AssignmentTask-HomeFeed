@@ -38,7 +38,7 @@ class BlogViewSet2(APIView):
     def get(self, request  , child_id):
         if child_id :
             child = Child.objects.get(id= child_id)
-            blogs = Blog.objects.filter(content_age__lt = child.age , content_gender = child.gender)
+            blogs = Blog.objects.filter(content_age__lte = child.age , content_gender = child.gender)
             if not blogs:
                 Response({'data':'blogs does not exists for your age/gender'})
 
