@@ -30,7 +30,7 @@ class BlogViewSet(viewsets.ModelViewSet):
         parent = Parent.objects.get(id=parent_id)
         child = parent.children.first()  
 
-        blogs = Blog.objects.filter(content_age__lt=child.age , contend_gender = child.gender)
+        blogs = Blog.objects.filter(content_age__lt=child.age , content_gender = child.gender)
         if child.gender:
             blogs = blogs.filter(content_gender=child.gender)
         serializer = BlogSerializer(blogs, many=True)
